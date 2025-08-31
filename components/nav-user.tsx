@@ -13,8 +13,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { Badge } from "./ui/badge";
 import { setTab } from "@/store/exam-slice";
+import { TOUR_STEP_IDS } from "@/lib/tour-constants";
+import { useTour } from "./tour";
+import { cn } from "@/lib/utils";
 
-export function NavUser() {
+export function NavUser({ setOpenTour }: { setOpenTour: (open: boolean) => void }) {
+  const { isActive } = useTour();
   const answers = useSelector((state: RootState) => state.exam.answers);
   const tab = useSelector((state: RootState) => state.exam.tab);
   const dispatch = useDispatch();
@@ -25,6 +29,7 @@ export function NavUser() {
           <Button
             className="w-full border rounded-md flex items-center justify-center"
             variant="outline"
+            onClick={() => setOpenTour(true)}
           >
             <BookOpen className="size-4" />
             Instrcutions
@@ -32,7 +37,8 @@ export function NavUser() {
         </SidebarMenuItem>
         <SidebarMenuItem className="flex-1">
           <Button
-            className="w-full border rounded-md flex items-center justify-center"
+          id={TOUR_STEP_IDS.TOGGLE_TABS}
+            className={cn("w-full border rounded-md flex items-center justify-center", isActive && "p-2")}
             variant="outline"
             onClick={() =>
               dispatch(
@@ -49,6 +55,7 @@ export function NavUser() {
       </div>
       <SidebarMenuItem>
         <Button
+          id={TOUR_STEP_IDS.SUBMIT_TEST}
           size="default"
           className="w-full flex items-center justify-center"
           variant="default"
