@@ -1,24 +1,16 @@
 "use client";
 
-import { ClockIcon, TimerIcon } from "lucide-react";
-import { Badge } from "./ui/badge";
+import { ClockIcon } from "lucide-react";
 import { RootState } from "@/store/store";
 import { useSelector } from "react-redux";
 import { Button } from "./ui/button";
-import { Separator } from "./ui/separator";
 import { useTime } from "@/hooks/use-time";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { Popover, PopoverTrigger } from "./ui/popover";
-import { PopoverContent } from "@radix-ui/react-popover";
-import { Sidebar } from "./ui/sidebar";
-import { SidebarContent } from "./ui/sidebar";
-import { SidebarGroup } from "./ui/sidebar";
-import { SidebarGroupContent } from "./ui/sidebar";
-import { SidebarMenu } from "./ui/sidebar";
-import { SidebarMenuItem } from "./ui/sidebar";
-import { SidebarMenuButton } from "./ui/sidebar";
+import { TOUR_STEP_IDS } from "@/lib/tour-constants";
+import { useTour } from "./tour";
+import { cn } from "@/lib/utils";
 
 export function SiteHeader() {
+  const { isActive } = useTour();
   const { timeLeft } = useTime();
   const examMeta = useSelector((state: RootState) => state.exam.examMeta);
   return (
@@ -30,7 +22,7 @@ export function SiteHeader() {
             Hello, <span className="font-medium">{examMeta.userName}</span>
           </span>
         </div>
-        <div className="flex gap-2 items-center">
+        <div id={TOUR_STEP_IDS.TIME_LEFT} className={cn("flex gap-2 items-center", isActive && "p-2")}>
           <span className="flex gap-2 items-center">
             <span className="font-medium text-sm">Time Left:</span>
             <Button

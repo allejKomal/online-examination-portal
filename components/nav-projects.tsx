@@ -14,8 +14,11 @@ import { Button } from "./ui/button";
 import { setCurrentQuestion, setTab } from "@/store/exam-slice";
 import { cn } from "@/lib/utils";
 import { useMemo } from "react";
+import { TOUR_STEP_IDS } from "@/lib/tour-constants";
+import { useTour } from "./tour";
 
 export function NavProjects() {
+  const { isActive } = useTour();
   const { questions } = useSelector((state: RootState) => state.exam);
   const answers = useSelector((state: RootState) => state.exam.answers);
   const dispatch = useDispatch();
@@ -70,7 +73,13 @@ export function NavProjects() {
   return (
     <>
       <SidebarGroup className="group-data-[collapsible=icon]:hidden gap-2">
-        <SidebarMenu className="grid grid-cols-2  gap-2.5 overflow-y-auto">
+        <SidebarMenu
+          id={TOUR_STEP_IDS.METRICS}
+          className={cn(
+            "grid grid-cols-2  gap-2.5 overflow-y-auto",
+            isActive && "p-2"
+          )}
+        >
           {variants.map((variant, idx) => (
             <SidebarMenuItem
               key={variant.variant}
@@ -95,7 +104,13 @@ export function NavProjects() {
       </SidebarGroup>
       <SidebarGroup className="group-data-[collapsible=icon]:hidden gap-2 mx-auto flex flex-col">
         <SidebarGroupLabel className="text-xl">Questions</SidebarGroupLabel>
-        <SidebarMenu className="grid grid-cols-5 gap-2.5 max-h-[600px] overflow-y-auto p-2">
+        <SidebarMenu
+          id={TOUR_STEP_IDS.QUESTIONS}
+          className={cn(
+            "grid grid-cols-5 gap-2.5 max-h-[600px] overflow-y-auto p-2",
+            isActive && "p-4"
+          )}
+        >
           {questions.map((question, index) => {
             const isAnswered = answers[question.id];
             const isCurrent = index === currentQuestionIdx;

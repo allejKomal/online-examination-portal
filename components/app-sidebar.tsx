@@ -10,7 +10,12 @@ import {
   SidebarFooter,
 } from "@/components/ui/sidebar";
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({
+  setOpenTour,
+  ...props
+}: React.ComponentProps<typeof Sidebar> & {
+  setOpenTour: (open: boolean) => void;
+}) {
   return (
     <Sidebar
       className="top-(--header-height) h-[calc(100svh-var(--header-height))]! pt-2 pb-1 px-4"
@@ -21,7 +26,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavProjects />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser />
+        <NavUser setOpenTour={setOpenTour} />
       </SidebarFooter>
     </Sidebar>
   );
