@@ -2,7 +2,7 @@ import React from "react";
 import { Badge } from "@/components/ui/badge";
 import { Question, QuestionType } from "@/types/question.type";
 
-interface QuestionHeaderProps {
+export interface QuestionHeaderProps {
   questionIndex: number;
   question: Question | null;
 }

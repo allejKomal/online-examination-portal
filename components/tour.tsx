@@ -217,6 +217,11 @@ export function TourProvider({
     setIsCompleted(completed);
   }, []);
 
+  const handleTourComplete = useCallback(() => {
+    setIsTourCompleted(true);
+    onComplete?.();
+  }, [setIsTourCompleted]);
+
   return (
     <TourContext.Provider
       value={{

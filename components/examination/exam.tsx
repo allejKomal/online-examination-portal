@@ -40,13 +40,10 @@ function Exam() {
   const [currentQuestionAnswer, setCurrentQuestionAnswer] =
     useState<QuestionAnswer | null>(null);
   const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
-  const [allQuestionsAnswers, setAllQuestionsAnswers] = useState<
+  const [allQuestionsAnswers,] = useState<
     Record<string, string | string[]>
   >({});
 
-  useEffect(() => {
-    console.log("allQuestionsAnswers", allQuestionsAnswers);
-  }, [allQuestionsAnswers]);
   const dispatch = useDispatch();
   const questionsState = useSelector(
     (state: RootState) => state.exam.questions
@@ -104,7 +101,7 @@ function Exam() {
       })
     );
     dispatch(setCurrentQuestion(questions[0].id));
-  }, [dispatch, questions]);
+  }, [dispatch]);
 
   useEffect(() => {
     if (questionsState.length > 0 && Object.keys(answers).length > 0) {
@@ -172,54 +169,22 @@ function Exam() {
       setCurrentQuestionAnswer(null);
     }
   };
-
-  // New handlers for all questions view
-  const handleAllQuestionsSingleChoice = (
-    value: string,
-    questionId: string
-  ) => {
-    setAllQuestionsAnswers((prev) => ({
-      ...prev,
-      [questionId]: value,
-    }));
-  };
-
-  const handleAllQuestionsMultipleChoice = (
-    optionId: string,
-    checked: boolean,
-    questionId: string
-  ) => {
-    const currentAnswers = (allQuestionsAnswers[questionId] as string[]) || [];
-
-    let newAnswers: string[];
-    if (checked) {
-      newAnswers = [...currentAnswers, optionId];
-    } else {
-      newAnswers = currentAnswers.filter((id) => id !== optionId);
-    }
-
-    setAllQuestionsAnswers((prev) => ({
-      ...prev,
-      [questionId]: newAnswers,
-    }));
-  };
-
   const clearResponse = useCallback(() => {
     setSelectedAnswers([]);
     setCurrentQuestionAnswer(null);
-  }, [currentQuestion?.id, answers, dispatch]);
+  }, []);
 
   const handleNextQuestion = useCallback(() => {
     if (currentQuestionIdx < questions.length - 1) {
       dispatch(setCurrentQuestion(questions[currentQuestionIdx + 1].id));
     }
-  }, [currentQuestionIdx, questions, dispatch]);
+  }, [currentQuestionIdx, dispatch]);
 
   const handlePreviousQuestion = useCallback(() => {
     if (currentQuestionIdx > 0) {
       dispatch(setCurrentQuestion(questions[currentQuestionIdx - 1].id));
     }
-  }, [currentQuestionIdx, questions, dispatch]);
+  }, [currentQuestionIdx, dispatch]);
 
   const handleMarkForReviewAndNext = useCallback(() => {
     if (currentQuestion?.id) {
@@ -228,7 +193,7 @@ function Exam() {
     if (currentQuestionIdx < questions.length - 1) {
       dispatch(setCurrentQuestion(questions[currentQuestionIdx + 1].id));
     }
-  }, [currentQuestionIdx, questions, dispatch, currentQuestion?.id]);
+  }, [currentQuestionIdx, dispatch, currentQuestion?.id]);
 
   const handleSaveAndNext = useCallback(() => {
     if (currentQuestionAnswer?.answer) {
@@ -271,25 +236,25 @@ function Exam() {
       content: <div>Previous Next Question</div>,
       selectorId: TOUR_STEP_IDS.PREV_NEXT_QUESTION,
       position: "right",
-      onClickWithinArea: () => {},
+      onClickWithinArea: () => { },
     },
     {
       content: <div>Clear Response</div>,
       selectorId: TOUR_STEP_IDS.CLEAR_RESPONSE,
       position: "bottom",
-      onClickWithinArea: () => {},
+      onClickWithinArea: () => { },
     },
     {
       content: <div>Mark for Review and Next</div>,
       selectorId: TOUR_STEP_IDS.MARK_FOR_REVIEW_AND_NEXT,
       position: "right",
-      onClickWithinArea: () => {},
+      onClickWithinArea: () => { },
     },
     {
       content: <div>Save & Next</div>,
       selectorId: TOUR_STEP_IDS.SAVE_AND_NEXT,
       position: "right",
-      onClickWithinArea: () => {},
+      onClickWithinArea: () => { },
     },
   ];
 
@@ -305,7 +270,7 @@ function Exam() {
     }, 100);
 
     return () => clearTimeout(timer);
-  }, [setSteps]);
+  }, [setSteps, steps]);
 
   return (
     <div className="[--header-height:calc(--spacing(14))]">
@@ -402,7 +367,7 @@ function Exam() {
                       </div>
                       <div className="flex flex-col gap-2">
                         {currentQuestion?.type ===
-                        QuestionType.SINGLE_CHOICE ? (
+                          QuestionType.SINGLE_CHOICE ? (
                           <RadioGroup
                             value={selectedAnswers[0] || ""}
                             key={currentQuestion?.id}
@@ -414,7 +379,7 @@ function Exam() {
                                 className={cn(
                                   "flex items-center gap-3 bg-muted/20 p-3 rounded-md cursor-pointer w-full",
                                   selectedAnswers.includes(option.id) &&
-                                    "bg-muted"
+                                  "bg-muted"
                                 )}
                                 key={option.id}
                               >
@@ -442,7 +407,7 @@ function Exam() {
                                   className={cn(
                                     "flex items-center gap-3 bg-muted/20 p-3 rounded-md cursor-pointer w-full",
                                     selectedAnswers.includes(option.id) &&
-                                      "bg-muted"
+                                    "bg-muted"
                                   )}
                                 >
                                   <Checkbox
@@ -539,8 +504,8 @@ function Exam() {
                         <p className="font-medium">{question.question}</p>
                         {questionsState.find((q) => q.id === question.id)
                           ?.marked && (
-                          <BookmarkIcon className="h-10 w-10 text-yellow-600 p-2 rounded-full bg-yellow-600/10" />
-                        )}
+                            <BookmarkIcon className="h-10 w-10 text-yellow-600 p-2 rounded-full bg-yellow-600/10" />
+                          )}
                       </div>
                     </div>
                     <div className="flex flex-col gap-2">
@@ -554,7 +519,7 @@ function Exam() {
                               className={cn(
                                 "flex items-center gap-3 bg-muted/20 p-3 rounded-md cursor-pointer w-full",
                                 allQuestionsAnswers[question.id] ===
-                                  option.id && "bg-muted"
+                                option.id && "bg-muted"
                               )}
                               key={option.id}
                             >

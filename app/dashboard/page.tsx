@@ -78,7 +78,7 @@ export default function Page() {
     }, 100);
 
     return () => clearTimeout(timer);
-  }, [setSteps]);
+  }, [setSteps, steps]);
 
   return (
     <ExaminationContextProvider>
@@ -90,7 +90,7 @@ export default function Page() {
               <QuestionWise />
               <AllQuestions />
             </SidebarInset>
-            <AppSidebar setOpenTour={setOpenTour}/>
+            <AppSidebar setOpenTour={setOpenTour} />
           </div>
         </SidebarProvider>
       </div>

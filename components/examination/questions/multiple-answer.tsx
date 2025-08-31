@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { RadioGroupItem } from "@/components/ui/radio-group";
 import { QuestionOption } from "@/types/question.type";
 
-interface MultipleTypeProps {
+export interface MultipleTypeProps {
   answer: string | null;
   options: QuestionOption[];
   id: string;

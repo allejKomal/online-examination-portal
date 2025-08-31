@@ -1,11 +1,9 @@
 "use client";
 
-import { CheckIcon, BookmarkIcon } from "lucide-react";
 import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { RootState } from "@/store/store";
@@ -127,18 +125,18 @@ export function NavProjects() {
                   isCurrent && "ring-2 ring-primary",
                   // Priority order: answered-marked > answered > marked > visited > not-visited
                   isAnswered &&
-                    isReviewed &&
-                    "bg-answered-reviewed hover:bg-answered-reviewed",
+                  isReviewed &&
+                  "bg-answered-reviewed hover:bg-answered-reviewed",
                   isAnswered && !isReviewed && "bg-answered hover:bg-answered",
                   !isAnswered && isReviewed && "bg-reviewed hover:bg-reviewed",
                   !isAnswered &&
-                    !isReviewed &&
-                    isVisited &&
-                    "bg-unanswered hover:bg-unanswered",
+                  !isReviewed &&
+                  isVisited &&
+                  "bg-unanswered hover:bg-unanswered",
                   !isAnswered &&
-                    !isReviewed &&
-                    !isVisited &&
-                    "bg-not-visited hover:bg-not-visited"
+                  !isReviewed &&
+                  !isVisited &&
+                  "bg-not-visited hover:bg-not-visited"
                 )}
                 onClick={() => handleQuestionClick(question.id)}
               >

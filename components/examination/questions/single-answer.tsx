@@ -1,5 +1,5 @@
 import React from "react";
-import { Question, QuestionOption } from "@/types/question.type";
+import { QuestionOption } from "@/types/question.type";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";

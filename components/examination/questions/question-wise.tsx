@@ -1,35 +1,17 @@
 "use client";
 
-import { AppSidebar } from "@/components/app-sidebar";
-import { SiteHeader } from "@/components/site-header";
 import { Button } from "@/components/ui/button";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
   BookmarkIcon,
-  SaveIcon,
-  TrashIcon,
 } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
-import { useCallback, useEffect, useState } from "react";
-import {
-  setQuestions,
-  setCurrentQuestion,
-  setAnswer,
-  toggleMarkForReview,
-  recalculateQuestionStates,
-  setExamMeta,
-} from "@/store/exam-slice";
 import { questions } from "@/lib/dummy-question";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import { QuestionAnswer, QuestionType } from "@/types/question.type";
+import { QuestionType } from "@/types/question.type";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
 import { useExaminationContext } from "@/context/use-examination-context";
 import { TOUR_STEP_IDS } from "@/lib/tour-constants";
 import QuestionHeader from "./question-header";
@@ -44,9 +26,6 @@ function QuestionWise() {
     selectedAnswers,
     handleSingleChoiceAnswer,
     handleMultipleChoiceAnswer,
-    clearResponse,
-    handleMarkForReviewAndNext,
-    handleSaveAndNext,
   } = useExaminationContext();
 
   const tab = useSelector((state: RootState) => state.exam.tab);
@@ -64,7 +43,7 @@ function QuestionWise() {
   return (
     <>
       {tab === "question-wise" && (
-        <>
+        <div key='questionw-wise'>
           <Tabs defaultValue="account" className="w-full">
             <div className="flex items-center justify-between">
               <TabsList className="h-10">
@@ -126,6 +105,7 @@ function QuestionWise() {
                 <div className="flex flex-col gap-2">
                   {currentQuestion?.type === QuestionType.SINGLE_CHOICE ? (
                     <MultipleType
+                      key={currentQuestion?.id}
                       answer={selectedAnswers[0] || null}
                       options={currentQuestion?.options}
                       id={currentQuestion?.id}
@@ -139,6 +119,7 @@ function QuestionWise() {
                     >
                       {currentQuestion?.options.map((option) => (
                         <SingleAnswer
+                          key={`single-${currentQuestion?.id}-${option.id}`}
                           id={currentQuestion?.id || ""}
                           option={option}
                           checked={selectedAnswers.includes(option.id)}
@@ -158,7 +139,7 @@ function QuestionWise() {
             </TabsContent>
           </Tabs>
           <QuestionFooter />
-        </>
+        </div>
       )}
     </>
   );

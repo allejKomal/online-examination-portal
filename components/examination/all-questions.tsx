@@ -1,42 +1,19 @@
 "use client";
 
-import { AppSidebar } from "@/components/app-sidebar";
-import { SiteHeader } from "@/components/site-header";
-import { Button } from "@/components/ui/button";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  ArrowLeftIcon,
-  ArrowRightIcon,
   BookmarkIcon,
-  SaveIcon,
-  TrashIcon,
 } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
-import { useCallback, useEffect, useState } from "react";
-import {
-  setQuestions,
-  setCurrentQuestion,
-  setAnswer,
-  toggleMarkForReview,
-  recalculateQuestionStates,
-  setExamMeta,
-} from "@/store/exam-slice";
+import { useState } from "react";
 import { questions } from "@/lib/dummy-question";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import { QuestionAnswer, QuestionType } from "@/types/question.type";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
-import QuestionWise from "@/components/examination/questions/question-wise";
+import { QuestionType } from "@/types/question.type";
 import QuestionHeader from "./questions/question-header";
 import MultipleType from "./questions/multiple-answer";
 import SingleAnswer from "./questions/single-answer";
 
 function AllQuestions() {
-  const [allQuestionsAnswers, setAllQuestionsAnswers] = useState<
+  const [allQuestionsAnswers] = useState<
     Record<string, string | string[]>
   >({});
 
